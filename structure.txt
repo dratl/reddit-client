@@ -1,0 +1,15 @@
+src/
+├── actions/
+├── reducers/
+├── components/
+│   ├── Header/
+│   ├── Sidebar/
+│   ├── PostsList/
+│   ├── PostDetail/
+│   ├── Charts/
+│   ├── common/
+├── services/
+├── styles/
+├── store.js
+├── App.js
+├── index.js
