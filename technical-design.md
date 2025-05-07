@@ -52,6 +52,8 @@ This guide outlines the steps to build a Reddit client application using React a
 
 We are building a Reddit app that connects to the API and fetches the latest posts based on predefined search queries used as navigation links. Built using React, Redux, JSX. Don't use TypeScript.
 
+Please start building the code and give instructions on every step. The code should be well commented.
+
 ## Application Layout
 
 ### Header
@@ -81,6 +83,9 @@ We are building a Reddit app that connects to the API and fetches the latest pos
 - Add more predefined search queries.
 - Enhance animations and transitions.
 - Improve error handling and recovery.
+- Use .env to save API keys
+- Don't use createStore since it's deprecated.
+- Use the configureStore method from @reduxjs/toolkit
 
 ## Testing
 - Write unit tests for all components.
@@ -90,5 +95,15 @@ We are building a Reddit app that connects to the API and fetches the latest pos
 - Ensure the application is accessible via a public URL.
 - Test compatibility with modern browsers and devices.
 
-## Performance
-- Aim for 90+ scores on Lighthouse for performance, accessibility, and SEO.
+## Quality Assurance Checklist
+
+- 90+ Lighthouse scores for all categories
+- Comprehensive test coverage (>80%)
+- Responsive on all device sizes
+- Cross-browser compatible
+- Accessible (WCAG 2.1 compliant)
+- Smooth animations and transitions
+- Clear error states and recovery
+- Optimized performance
+- Secure API credential handling
+- Progressive Web App capabilities
