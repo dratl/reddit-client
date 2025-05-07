@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { Chart, registerables } from 'chart.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts } from '../../actions/postsActions';
-import './SubredditChart.css';
+import '../../styles/main.css';
 
 // Register chart components
 Chart.register(...registerables);
@@ -11,7 +11,7 @@ Chart.register(...registerables);
 const SubredditChart = ({ subreddits }) => {
   const chartRef = useRef(null);
   const dispatch = useDispatch();
-  const { postsBySubreddit } = useSelector((state) => state.posts);
+  const { postsBySubreddit = {} } = useSelector((state) => state.posts);
   
   // Fetch data for each subreddit when component mounts
   useEffect(() => {
@@ -20,7 +20,7 @@ const SubredditChart = ({ subreddits }) => {
         dispatch(fetchPosts(subreddit, 'hot', 10));
       }
     });
-  }, [dispatch, subreddits]);
+  }, [dispatch, subreddits, postsBySubreddit]);
 
   // Create or update chart when data changes
   useEffect(() => {

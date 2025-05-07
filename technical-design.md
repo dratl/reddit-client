@@ -86,6 +86,7 @@ Please start building the code and give instructions on every step. The code sho
 - Use .env to save API keys
 - Don't use createStore since it's deprecated.
 - Use the configureStore method from @reduxjs/toolkit
+- useHistory has been removed in react-router-dom v6; you should use useNavigate.
 
 ## Testing
 - Write unit tests for all components.

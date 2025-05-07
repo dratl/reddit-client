@@ -1,0 +1,87 @@
+/* src/components/common/CommentList.css */
+.comment-list {
+    margin-top: 2rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem;
+  }
+  
+  .comment {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .comment-reply {
+    border-left: 2px solid var(--border-color);
+    padding-left: 1rem;
+  }
+  
+  .comment-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+  
+  .comment-author {
+    font-weight: bold;
+    color: var(--primary-color);
+  }
+  
+  .comment-score {
+    color: var(--text-color);
+  }
+  
+  .comment-time {
+    color: var(--text-secondary);
+  }
+  
+  .comment-body {
+    margin: 0.5rem 0;
+    line-height: 1.5;
+  }
+  
+  .comment-text {
+    word-break: break-word;
+  }
+  
+  .comment-text a {
+    color: var(--secondary-color);
+    text-decoration: none;
+  }
+  
+  .comment-text a:hover {
+    text-decoration: underline;
+  }
+  
+  .comment-text blockquote {
+    border-left: 3px solid var(--border-color);
+    padding-left: 1rem;
+    margin: 0.5rem 0;
+    color: var(--text-secondary);
+  }
+  
+  .comment-text pre {
+    background-color: var(--code-bg);
+    padding: 0.5rem;
+    border-radius: 4px;
+    overflow-x: auto;
+  }
+  
+  .no-comments {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+  }
+  
+  /* Add these to your root CSS variables if not already present */
+  :root {
+    --text-secondary: #666;
+    --code-bg: #f5f5f5;
+  }
+  
+  [data-theme="dark"] {
+    --text-secondary: #aaa;
+    --code-bg: #333;
+  }

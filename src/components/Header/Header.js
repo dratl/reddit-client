@@ -1,19 +1,19 @@
 // src/components/Header/Header.js
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { searchRedditPosts } from '../../actions/postsActions';
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       dispatch(searchRedditPosts(searchQuery));
-      history.push(`/search?q=${encodeURIComponent(searchQuery)}`);
+      navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
     }
   };
 

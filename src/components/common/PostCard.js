@@ -1,7 +1,7 @@
 // src/components/common/PostCard.js
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './PostCard.css';
+import '../../styles/main.css';
 
 const PostCard = ({ post }) => {
   const formatNumber = (num) => {

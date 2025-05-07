@@ -1,16 +1,16 @@
 // src/components/PostDetail/PostDetail.js
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { fetchPostDetails } from '../../actions/postsActions';
 import LoadingSpinner from '../common/LoadingSpinner';
 import ErrorMessage from '../common/ErrorMessage';
 import CommentList from '../common/CommentList';
-import './PostDetail.css';
+import '../../styles/main.css';
 
 const PostDetail = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { id, subreddit } = useParams();
   
   const { 
@@ -25,7 +25,7 @@ const PostDetail = () => {
   }, [dispatch, id, subreddit]);
 
   const handleBack = () => {
-    history.goBack();
+    navigate(-1);
   };
 
   if (loading) return <LoadingSpinner />;

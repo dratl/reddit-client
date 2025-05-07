@@ -7,7 +7,7 @@ import PostCard from '../common/PostCard';
 import Pagination from '../common/Pagination';
 import LoadingSpinner from '../common/LoadingSpinner';
 import ErrorMessage from '../common/ErrorMessage';
-import './PostsList.css';
+import '../../styles/main.css';
 
 const PostsList = () => {
   const dispatch = useDispatch();

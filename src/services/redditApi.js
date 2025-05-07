@@ -5,8 +5,8 @@ import axios from 'axios';
 const BASE_URL = 'https://www.reddit.com';
 
 // Client credentials (replace with your own)
-const CLIENT_ID = V5uiAm7QfZY2lLc4I1uPGw; // Your Reddit app client ID
-const CLIENT_SECRET = xIwrNln-4OC-ORvD9Gu7-OyfuugYdQ; // Only needed for user auth
+const CLIENT_ID = 'V5uiAm7QfZY2lLc4I1uPGw'; // Your Reddit app client ID
+const CLIENT_SECRET = 'xIwrNln-4OC-ORvD9Gu7-OyfuugYdQ'; // Only needed for user auth
 const REDIRECT_URI = 'http://localhost:3000/auth/callback'; // For OAuth
 
 // Basic API functions

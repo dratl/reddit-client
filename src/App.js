@@ -1,17 +1,17 @@
 // src/App.js (updated)
 import React, { lazy, Suspense } from 'react';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import store from './store';
-import Header from './components/Header';
-import Sidebar from './components/Sidebar';
+import Header from './components/Header/Header';
+import Sidebar from './components/Sidebar/Sidebar';
 import LoadingSpinner from './components/common/LoadingSpinner';
 import './styles/main.css';
 
 // Lazy load components
-const HomeView = lazy(() => import('./components/HomeView'));
-const PostsList = lazy(() => import('./components/PostsList'));
-const PostDetail = lazy(() => import('./components/PostDetail'));
+const HomeView = lazy(() => import('./components/HomeView/HomeView'));
+const PostsList = lazy(() => import('./components/PostsList/PostsList'));
+const PostDetail = lazy(() => import('./components/PostDetail/PostDetail'));
 
 function App() {
   return (
@@ -23,12 +23,12 @@ function App() {
             <Sidebar />
             <main className="main-content">
               <Suspense fallback={<LoadingSpinner />}>
-                <Switch>
-                  <Route exact path="/" component={HomeView} />
-                  <Route path="/r/:subreddit" component={PostsList} />
-                  <Route path="/post/:subreddit/:id" component={PostDetail} />
-                  <Route path="/search" component={PostsList} />
-                </Switch>
+                <Routes>
+                  <Route path="/" element={<HomeView />} />
+                  <Route path="/r/:subreddit" element={<PostsList />} />
+                  <Route path="/post/:subreddit/:id" element={<PostDetail />} />
+                  <Route path="/search" element={<PostsList />} />
+                </Routes>
               </Suspense>
             </main>
           </div>
