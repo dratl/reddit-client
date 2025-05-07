@@ -1,7 +1,7 @@
 // src/components/HomeView.js
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPosts } from '../actions/postsActions';
+import { fetchPosts } from '../../actions/postsActions';
 import SubredditChart from './Charts/SubredditChart';
 
 const HomeView = () => {

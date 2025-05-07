@@ -3,10 +3,10 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import store from './store';
-import Header from './components/Header';
-import Sidebar from './components/Sidebar';
-import HomeView from './components/HomeView';
-import PostsList from './components/PostsList';
+import Header from './components/Header/Header';
+import Sidebar from './components/Sidebar/Sidebar';
+import HomeView from './components/HomeView/HomeView';
+import PostsList from './components/PostsList/';
 import PostDetail from './components/PostDetail';
 import './styles/main.css';
 
