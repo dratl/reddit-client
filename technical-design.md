@@ -99,7 +99,7 @@ CLIENT_ORIGIN=http://localhost:3000
 PORT=5000
 
 ## Testing
-- Write unit tests for all components.
+- Write unit tests for your components using Jest and Enzyme
 - Create end-to-end tests for user interactions.
 
 ## Deployment
