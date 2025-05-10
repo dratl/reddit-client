@@ -1,43 +1,67 @@
-// src/components/Header/Header.js
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { searchRedditPosts } from '../../actions/postsActions';
+import { useState } from 'react';
+import { searchPosts } from '../../services/redditApi';
+import { getCacheKey, getCached, setCached } from '../../services/cache';
+import '../../styles/main.css';
 
-const Header = () => {
+const Header = ({ onSearchComplete }) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchError, setSearchError] = useState(null);
 
-  const handleSearch = (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      dispatch(searchRedditPosts(searchQuery));
-      navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
+    if (!searchQuery.trim()) return;
+
+    setIsSearching(true);
+    setSearchError(null);
+
+    try {
+      const cacheKey = getCacheKey('search', { q: searchQuery });
+      const cachedResults = getCached(cacheKey);
+
+      if (cachedResults) {
+        onSearchComplete(cachedResults);
+      } else {
+        const results = await searchPosts(searchQuery);
+        setCached(cacheKey, results);
+        onSearchComplete(results);
+      }
+    } catch (err) {
+      if (err.response?.status === 429) {
+        setSearchError({
+          message: 'Search is rate limited. Please wait before searching again.',
+          isRateLimit: true
+        });
+      } else {
+        setSearchError('Failed to perform search. Please try again.');
+      }
+    } finally {
+      setIsSearching(false);
     }
   };
 
   return (
     <header className="header">
-      <div className="header-container">
-        <div className="logo">
-          <a href="/">Reddit Client</a>
+      <form onSubmit={handleSearch} className="search-form">
+        <input
+          type="text"
+          placeholder="Search Reddit..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          disabled={isSearching}
+        />
+        <button type="submit" disabled={isSearching}>
+          {isSearching ? 'Searching...' : 'Search'}
+        </button>
+      </form>
+      {searchError && (
+        <div className="search-error">
+          {searchError.message}
+          {searchError.isRateLimit && (
+            <button onClick={handleSearch}>Retry</button>
+          )}
         </div>
-        
-        <form className="search-form" onSubmit={handleSearch}>
-          <input
-            type="text"
-            placeholder="Search Reddit..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <button type="submit">Search</button>
-        </form>
-        
-        <div className="user-actions">
-          <button className="theme-toggle">Toggle Theme</button>
-        </div>
-      </div>
+      )}
     </header>
   );
 };

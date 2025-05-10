@@ -52,7 +52,7 @@ This guide outlines the steps to build a Reddit client application using React a
 
 We are building a Reddit app that connects to the API and fetches the latest posts based on predefined search queries used as navigation links. Built using React, Redux, JSX. Don't use TypeScript.
 
-Please start building the code and give instructions on every step. The code should be well commented.
+The code should be well commented.
 
 ## Application Layout
 
@@ -87,6 +87,16 @@ Please start building the code and give instructions on every step. The code sho
 - Don't use createStore since it's deprecated.
 - Use the configureStore method from @reduxjs/toolkit
 - useHistory has been removed in react-router-dom v6; you should use useNavigate.
+
+## .env file data
+
+API_BASE=http://localhost:5000/api
+REDDIT_CLIENT_ID=V5uiAm7QfZY2lLc4I1uPGw
+REDDIT_CLIENT_SECRET=xIwrNln-4OC-ORvD9Gu7-OyfuugYdQ
+REDDIT_REDIRECT_URI=http://localhost:3000/auth/callback
+REDDIT_USER_AGENT=YourApp/1.0 by SlimSalaBimPong
+CLIENT_ORIGIN=http://localhost:3000
+PORT=5000
 
 ## Testing
 - Write unit tests for all components.

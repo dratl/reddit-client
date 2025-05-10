@@ -1,77 +1,75 @@
-// src/components/PostsList/PostsList.js
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useParams } from 'react-router-dom';
-import { fetchPosts, searchRedditPosts } from '../../actions/postsActions';
+import { useCallback, useState, useEffect } from 'react';
+import { fetchPosts } from '../../services/redditApi';
+import { getCacheKey, getCached, setCached } from '../../services/cache';
 import PostCard from '../common/PostCard';
-import Pagination from '../common/Pagination';
 import LoadingSpinner from '../common/LoadingSpinner';
 import ErrorMessage from '../common/ErrorMessage';
-import '../../styles/main.css';
+import Pagination from '../common/Pagination';
 
-const PostsList = () => {
-  const dispatch = useDispatch();
-  const { subreddit } = useParams();
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const searchQuery = searchParams.get('q');
-  
-  const { 
-    posts, 
-    loading, 
-    error, 
-    currentSubreddit,
-    searchQuery: storedQuery 
-  } = useSelector((state) => state.posts);
-  
-  const [currentPage, setCurrentPage] = React.useState(1);
+const PostsList = ({ subreddit = 'all', sort = 'hot' }) => {
+  const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 10;
 
-  useEffect(() => {
-    setCurrentPage(1); // Reset to first page when subreddit/search changes
+  const fetchData = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
     
-    if (subreddit) {
-      dispatch(fetchPosts(subreddit));
-    } else if (searchQuery) {
-      dispatch(searchRedditPosts(searchQuery));
-    } else {
-      dispatch(fetchPosts('all'));
+    try {
+      const cacheKey = getCacheKey(`r/${subreddit}/${sort}`, { limit: 25 });
+      const cachedData = getCached(cacheKey);
+      
+      if (cachedData) {
+        setPosts(cachedData);
+      } else {
+        const data = await fetchPosts(subreddit, sort, 25);
+        setCached(cacheKey, data);
+        setPosts(data);
+      }
+    } catch (err) {
+      if (err.response?.status === 429) {
+        setError({
+          message: 'Too many requests. Please wait a minute and try again.',
+          isRateLimit: true
+        });
+      } else {
+        setError({
+          message: 'Failed to load posts. Please try again later.',
+          isRateLimit: false
+        });
+      }
+    } finally {
+      setIsLoading(false);
     }
-  }, [dispatch, subreddit, searchQuery]);
+  }, [subreddit, sort]);
 
-  // Get current posts for pagination
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  // Pagination logic
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  if (loading) return <LoadingSpinner />;
-  if (error) return <ErrorMessage message={error} />;
+  if (isLoading) return <LoadingSpinner />;
+  if (error) return <ErrorMessage 
+                      message={error.message} 
+                      onRetry={error.isRateLimit ? fetchData : null} 
+                    />;
 
   return (
-    <div className="posts-list-container">
-      <h2 className="posts-list-header">
-        {searchQuery 
-          ? `Search results for "${storedQuery}"` 
-          : `r/${currentSubreddit}`}
-      </h2>
-      
-      <div className="posts-grid">
-        {currentPosts.length > 0 ? (
-          currentPosts.map((post) => (
-            <PostCard key={post.id} post={post} />
-          ))
-        ) : (
-          <div className="no-posts">No posts found</div>
-        )}
-      </div>
-      
+    <div className="posts-list">
+      {currentPosts.map(post => (
+        <PostCard key={post.id} post={post} />
+      ))}
       <Pagination
         postsPerPage={postsPerPage}
         totalPosts={posts.length}
         currentPage={currentPage}
-        paginate={paginate}
+        paginate={setCurrentPage}
       />
     </div>
   );

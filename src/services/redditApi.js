@@ -1,12 +1,11 @@
 // src/services/redditApi.js
 import axios from 'axios';
+import { requestQueue } from './requestQueue';
 
 // Create axios instance with defaults
 const apiClient = axios.create({
-  baseURL: process.env.NODE_ENV === 'development' 
-    ? 'http://localhost:5000/api'  // Development
-    : '/api',  // Production (relative path)
-  timeout: 8000,
+  baseURL: process.env.API_BASE || '/api',
+  timeout: 10000,
 });
 
 // Add request interceptor for auth token
@@ -58,16 +57,30 @@ const handleApiError = (error) => {
   }
 };
 
+// Adding retry logic
+const withRetry = async (requestFn, retries = 2, delay = 1000) => {
+  try {
+    return await requestFn();
+  } catch (error) {
+    if (error.response?.status === 429 && retries > 0) {
+      const retryAfter = error.response.headers['retry-after'] || delay;
+      await new Promise(res => setTimeout(res, retryAfter * 1000));
+      return withRetry(requestFn, retries - 1, retryAfter * 2);
+    }
+    throw error;
+  }
+};
+
 // API functions
 export const fetchPosts = async (subreddit, sort = 'hot', limit = 25) => {
-  try {
-    const response = await apiClient.get(`/reddit/r/${subreddit}/${sort}`, {
-      params: { limit },
-    });
-    return response.data.data.children.map(child => child.data);
-  } catch (error) {
-    return handleApiError(error);
-  }
+  return requestQueue.add(() => 
+    withRetry(async () => {
+      const response = await apiClient.get(`/reddit/r/${subreddit}/${sort}`, {
+        params: { limit },
+      });
+      return response.data.data.children.map(child => child.data);
+    })
+  );
 };
 
 export const searchPosts = async (query, sort = 'relevance', limit = 25) => {

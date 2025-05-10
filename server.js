@@ -39,8 +39,14 @@ app.use(cors({
 // Rate limiting (Reddit API has 60 requests/minute limit)
 const limiter = rateLimit({
   windowMs: 60 * 1000, // 1 minute
-  max: 60, // limit each IP to 50 requests per windowMs
-  message: 'Too many requests, please try again later'
+  max: 50, // limit each IP to 50 requests per windowMs staying well below Reddit's limit
+  handler: (req, res) => {
+    res.status(429).json({
+      error: 'Too many requests',
+      message: 'Please wait a minute before making more requests',
+      retryAfter: 60 // Seconds
+    });
+  }
 });
 app.use(limiter);
 
