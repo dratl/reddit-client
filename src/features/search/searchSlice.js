@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchMultipleQueriesStats } from '../../api/redditApi';
+import { fetchQueryStats, refreshQueryStats } from './searchThunks';
 
 const predefinedQueries = [
   'fernandez noroña',
@@ -19,22 +19,37 @@ const initialState = {
 const searchSlice = createSlice({
   name: 'search',
   initialState,
-  reducers: {},
+  reducers: {
+    addQuery: (state, action) => {
+      if (!state.queries.includes(action.payload)) {
+        state.queries.push(action.payload);
+      }
+    },
+    removeQuery: (state, action) => {
+      state.queries = state.queries.filter(query => query !== action.payload);
+      delete state.stats[action.payload];
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchMultipleQueriesStats.pending, (state) => {
+      .addCase(fetchQueryStats.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchMultipleQueriesStats.fulfilled, (state, action) => {
+      .addCase(fetchQueryStats.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.stats = action.payload;
       })
-      .addCase(fetchMultipleQueriesStats.rejected, (state, action) => {
+      .addCase(fetchQueryStats.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.error.message;
+        state.error = action.payload;
+      })
+      .addCase(refreshQueryStats.fulfilled, (state, action) => {
+        state.stats[action.payload.query] = action.payload.stats;
       });
   },
 });
+
+export const { addQuery, removeQuery } = searchSlice.actions;
 
 export const selectAllQueries = (state) => state.search.queries;
 export const selectQueryStats = (state) => state.search.stats;

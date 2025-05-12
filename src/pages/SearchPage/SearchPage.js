@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useNavigate, Routes, Route } from 'react-router-dom';
-import { fetchPostsByQuery } from '../../api/redditApi';
-import { selectAllPosts, selectPostsStatus, selectPostsError } from '../../features/posts/postsSlice';
+// import { fetchPostsByQuery } from '../../api/redditApi';
+import { fetchPosts, selectAllPosts, selectPostsStatus, selectPostsError } from '../../features/posts/postsSlice';
 import PostCard from '../../components/PostCard/PostCard';
 import Navigation from '../../components/Navigation/Navigation';
 import Loading from '../../components/Loading/Loading';
@@ -20,7 +20,7 @@ const SearchPage = () => {
 
   useEffect(() => {
     if (query) {
-      dispatch(fetchPostsByQuery({ query }));
+      dispatch(fetchPosts({ query }));
     }
   }, [dispatch, query]);
 
@@ -29,7 +29,7 @@ const SearchPage = () => {
   }
 
   if (status === 'failed') {
-    return <Error message={error} retryFn={() => dispatch(fetchPostsByQuery({ query }))} />;
+    return <Error message={error} retryFn={() => dispatch(fetchPosts({ query }))} />;
   }
 
   return (
