@@ -1,0 +1,70 @@
+.post-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    cursor: pointer;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .post-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .post-card .MuiCardContent-root {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .post-card h5 {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+    line-height: 1.4;
+    color: #222;
+  }
+  
+  .post-card .MuiTypography-body2 {
+    font-size: 0.85rem;
+    color: #787c7e;
+    margin-bottom: 12px;
+  }
+  
+  .post-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid #f0f0f0;
+    font-size: 0.85rem;
+    color: #878a8c;
+  }
+  
+  .post-stats span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  .post-card a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  .post-card a:hover {
+    text-decoration: underline;
+  }
+  
+  @media (max-width: 768px) {
+    .post-card {
+      margin-bottom: 16px;
+    }
+    
+    .post-card h5 {
+      font-size: 1rem;
+    }
+  }

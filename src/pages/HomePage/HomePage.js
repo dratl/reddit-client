@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-// import { fetchMultipleQueriesStats } from '../../api/redditApi';
-import { fetchQueryStats, selectAllQueries, selectQueryStats } from '../../features/search/searchSlice';
+import { fetchQueryStats } from '../../features/search/searchThunks';
+import { selectAllQueries, selectQueryStats } from '../../features/search/searchSlice';
 import SearchChart from '../../components/SearchChart/SearchChart';
 import './HomePage.css';
 
