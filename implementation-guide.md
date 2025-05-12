@@ -1,191 +1,202 @@
-We are building a Reddit client application using React, Redux, JSX. Don't use TypeScript. The application will connect to the Reddit API to fetch and display posts based on predefined search queries. Please start building the code and give instructions on every step. The code should be well commented.
+# Reddit Client Application Implementation Guide
 
-# Step-by-Step Implementation Guide
+## Overview
 
-## 1. Project Setup & Initialization
+We are building a Reddit client application using React, Redux, and JSX. The application will connect to the Reddit API to fetch the latest posts based on predefined search queries used as navigation links. **Note:** TypeScript will not be used.
 
-- Create a new React application using Create React App
-- Install required dependencies: Redux, React Router, Redux Thunk, Axios, Chart.js
-- Set up the project structure with components, reducers, actions, and styles folders
-- Configure Redux store with middleware for async actions
+### Predefined Search Queries
+- `fernandez noroña`
+- `andrea chavez`
+- `ernesto zedillo`
+- `claudia sheinbaum`
+- `alito moreno`
 
-## 2. Reddit API Configuration
+---
 
-Register your application with Reddit to get API credentials
+## Application Layout
 
-- Implement OAuth2 authentication flow
-- Create API service layer to handle all Reddit API requests
-- Set up rate limiting and error handling for API calls
+### Header
+- Displays the Reddit logo (links to the home page).
+- Includes a search box for filtering posts.
 
-## 3. UI Components Structure
+### Two-Column Layout
 
-- Design the main layout with responsive breakpoints
-- Create reusable components:
-    - Header (with logo and search box)
-    - Navigation sidebar
-    - Posts list component
-    - Post detail component
-    - Chart visualization component
-    - Pagination controls
-    - Loading and error states
+#### Navigation Column
+- Lists predefined search queries.
+- Includes a "Back to Home" link.
+- Displays the number of votes and comments for each search term in the past three days.
 
-## 4. State Management
+#### Viewer Column
+- Displays a graph chart on the home page showing the number of votes for each search query.
+- Shows the latest posts (20 per page) for the selected search query, with the following details:
+    - Title
+    - Image
+    - Community
+    - Author
+    - Number of votes
+    - Number of comments
 
-- Define Redux actions for:
-    - Fetching initial data
-    - Searching posts
-    - Loading specific query results
-    - Pagination control
-    - Error handling
-
-- Create reducers to manage:
-    - Posts data
-    - Search queries and results
-    - UI state (loading, errors, etc.)
-    - Pagination state
-
-## 5. Home View Implementation
-
-- Create home view component with chart visualization
-- Fetch initial data for predefined queries on app load
-- Display aggregated statistics in chart format
-- Implement responsive design for all device sizes
-
-## 6. Search & Navigation Implementation
-
-- Build search functionality in header
-- Create navigation sidebar with predefined queries
-- Implement click handlers for query selection
-- Display query statistics (votes, comments) in navigation
-- Add home link functionality
-
-## 7. Posts Display Implementation
-
-- Create posts list component with pagination
-- Implement card-based design for each post
-- Display post metadata (title, author, subreddit, etc.)
-- Handle image/video/link content appropriately
-- Add loading states during data fetch
-
-## 8. Detailed View Implementation
-
-- Create modal or separate route for post details
-- Fetch and display additional post information
-- Implement smooth transitions between views
-- Add navigation controls within detailed view
-
-## 9. Error Handling & Edge Cases
-
-- Handle API errors gracefully
-- Implement empty state designs
-- Add retry mechanisms for failed requests
-- Validate user input for search
-
-## 10. Performance Optimization
-
-- Implement lazy loading for components
-- Add image optimization
-- Set up proper caching strategies
-- Minimize bundle size
-- Optimize re-renders with React.memo and useCallback
-
-## 11. Testing Implementation
-
-- Write unit tests for all components
-- Test Redux actions and reducers
-- Implement integration tests for key workflows
-- Add end-to-end tests for critical user journeys
-
-## 12. Deployment & CI/CD
-
-- Set up production build configuration
-- Configure deployment to hosting service (Vercel, Netlify, etc.)
-- Implement CI/CD pipeline
-- Set up Lighthouse monitoring
-- Configure performance budgets
-
-## Quality Assurance Checklist
-
-- 90+ Lighthouse scores for all categories
-- Comprehensive test coverage (>80%)
-- Responsive on all device sizes
-- Cross-browser compatible
-- Accessible (WCAG 2.1 compliant)
-- Smooth animations and transitions
-- Clear error states and recovery
-- Optimized performance
-- Secure API credential handling
-- Progressive Web App capabilities
-
-
-# README.md
-# Reddit API Display App
-
-![App Screenshot](./wireframes/app-screenshot.png)
-
-A responsive React application that displays Reddit posts based on predefined search queries.
-
-## Wireframes
-
-### Desktop View
-![Desktop Wireframe](./wireframes/desktop-wireframe.png)
-
-### Mobile View
-![Mobile Wireframe](./wireframes/mobile-wireframe.png)
-
-## Technologies Used
-
-- React (with Hooks)
-- Redux (with Thunk middleware)
-- React Router
-- Axios (for API calls)
-- Chart.js (for data visualization)
-- Styled Components (for styling)
-- Jest & Enzyme (for testing)
-- Cypress (for end-to-end testing)
-- Lighthouse (for performance auditing)
+---
 
 ## Features
 
-- Responsive design for all device sizes
-- Predefined search query navigation
-- Real-time Reddit data visualization
-- Interactive chart of query statistics
-- Detailed post viewing
-- Search functionality
-- Pagination controls
-- Smooth animations and transitions
-- Comprehensive error handling
-- Offline support with service workers
+- **Responsive Design**: Optimized for desktop and mobile.
+- **Pagination**: Navigate through posts.
+- **Detailed Post Views**: Open in a modal or new route.
+- **Extensibility**: Add more predefined search queries.
+- **Enhanced Animations**: Smooth transitions.
+- **Error Handling**: Graceful recovery from errors.
+- **Environment Variables**: Use `.env` for API keys.
+- **Modern Redux**: Use `configureStore` from `@reduxjs/toolkit` instead of `createStore`.
+- **React Router v6**: Use `useNavigate` instead of `useHistory`.
+- **API Optimization**:
+    - Cache results to avoid redundant API calls.
+    - Implement token refresh logic.
+    - Handle rate limit errors (HTTP 429) gracefully.
 
-## Future Work
+---
 
-- Add user authentication
-- Implement saved searches
-- Enable commenting/voting functionality
-- Add dark mode support
-- Expand chart visualization options
-- Implement push notifications for new posts
-- Add social sharing capabilities
+## Environment Variables (`.env`)
 
-## Getting Started
+```plaintext
+API_BASE=http://localhost:5000/api
+REDDIT_CLIENT_ID=V5uiAm7QfZY2lLc4I1uPGw
+REDDIT_CLIENT_SECRET=xIwrNln-4OC-ORvD9Gu7-OyfuugYdQ
+REDDIT_REDIRECT_URI=http://localhost:3000/auth/callback
+REDDIT_USER_AGENT=YourApp/1.0 by SlimSalaBimPong
+CLIENT_ORIGIN=http://localhost:3000
+PORT=5000
+```
 
-1. Clone the repository
-2. Install dependencies: `npm install`
-3. Set up Reddit API credentials in `.env`
-4. Run development server: `npm start`
-5. Run tests: `npm test`
+---
 
 ## Testing
 
-- Unit tests: `npm test`
-- End-to-end tests: `npm run cypress`
-- Lighthouse audit: `npm run lighthouse`
+- **Unit Tests**: Use Jest and Enzyme for component testing.
+- **End-to-End Tests**: Use Cypress for user interaction testing.
+
+---
 
 ## Deployment
 
-The app is deployed at: [https://reddit-api-display.example.com](https://reddit-api-display.example.com)
+- Ensure the application is accessible via a public URL.
+- Test compatibility with modern browsers and devices.
 
-## Performance
+---
 
+## Quality Assurance Checklist
+
+- **Performance**: 90+ Lighthouse scores for all categories.
+- **Test Coverage**: >80% coverage for unit and integration tests.
+- **Responsiveness**: Works on all device sizes.
+- **Accessibility**: WCAG 2.1 compliant.
+- **Cross-Browser Compatibility**: Tested on modern browsers.
+- **Error Handling**: Clear error states and recovery mechanisms.
+- **Optimized Performance**: Minimized API calls and bundle size.
+- **Secure Credentials**: Proper handling of API keys.
+- **PWA Capabilities**: Offline support and fast loading.
+
+---
+
+## Step-by-Step Implementation Guide
+
+### 1. Project Setup
+- Create a new React app using Create React App.
+- Install dependencies: `redux`, `@reduxjs/toolkit`, `react-router-dom`, `axios`, `chart.js`.
+- Set up the project structure with folders for components, reducers, actions, and styles.
+- Configure the Redux store with middleware for async actions.
+
+### 2. Reddit API Configuration
+- Register the app with Reddit to obtain API credentials.
+- Implement OAuth2 authentication flow.
+- Create an API service layer for handling Reddit API requests.
+- Add rate limiting and error handling.
+
+### 3. UI Components
+- Design a responsive layout.
+- Create reusable components:
+    - Header (logo and search box)
+    - Navigation sidebar
+    - Posts list
+    - Post detail view
+    - Chart visualization
+    - Pagination controls
+    - Loading and error states
+
+### 4. State Management
+- Define Redux actions for:
+    - Fetching data
+    - Searching posts
+    - Pagination
+    - Error handling
+- Create reducers for managing:
+    - Posts data
+    - Search queries
+    - UI state (loading, errors, etc.)
+    - Pagination state
+
+### 5. Home View
+- Display aggregated statistics in a chart.
+- Fetch initial data for predefined queries on app load.
+
+### 6. Search & Navigation
+- Build search functionality in the header.
+- Implement navigation for predefined queries.
+- Display query statistics (votes, comments) in the sidebar.
+
+### 7. Posts Display
+- Create a card-based design for posts.
+- Add pagination controls.
+- Display metadata (title, author, subreddit, etc.).
+
+### 8. Detailed View
+- Create a modal or route for post details.
+- Fetch and display additional post information.
+
+### 9. Error Handling
+- Handle API errors gracefully.
+- Add retry mechanisms for failed requests.
+
+### 10. Performance Optimization
+- Implement lazy loading.
+- Optimize images and minimize bundle size.
+- Use caching to reduce redundant API calls.
+
+### 11. Testing
+- Write unit tests for components.
+- Test Redux actions and reducers.
+- Add end-to-end tests for critical workflows.
+
+### 12. Deployment
+- Configure production build and deploy to a hosting service (e.g., Vercel, Netlify).
+- Set up CI/CD pipelines.
+
+---
+
+## README.md
+
+### Project Overview
+A responsive React application that displays Reddit posts based on predefined search queries.
+
+### Features
+- Real-time Reddit data visualization.
+- Interactive charts for query statistics.
+- Detailed post views with metadata.
+- Pagination and search functionality.
+- Comprehensive error handling.
+
+### Getting Started
+1. Clone the repository.
+2. Install dependencies: `npm install`.
+3. Set up `.env` with Reddit API credentials.
+4. Start the development server: `npm start`.
+
+### Testing
+- Run unit tests: `npm test`.
+- Run end-to-end tests: `npm run cypress`.
+
+### Deployment
+The app is deployed at: [https://reddit-api-display.example.com](https://reddit-api-display.example.com).
+
+### Performance
 ![Lighthouse Scores](./wireframes/lighthouse-scores.png)
