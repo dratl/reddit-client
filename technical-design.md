@@ -87,6 +87,20 @@ The code should be well commented.
 - Don't use createStore since it's deprecated.
 - Use the configureStore method from @reduxjs/toolkit
 - useHistory has been removed in react-router-dom v6; you should use useNavigate.
+- Ensure the app is not making redundant API calls. For example:
+Cache results and reuse them instead of fetching the same data repeatedly.
+Avoid polling unless necessary.
+- Ensure your frontend is not making unnecessary or repeated API calls. For example:
+Avoid fetching data on every render or state change.
+Use caching to store results and reduce redundant requests.
+- The Reddit API doesn't allow direct requests from client-side JavaScript, use proper OAuth Flow.
+    - User authenticates with Reddit
+    - Reddit redirects to your backend with a code
+    - Backend exchanges code for token
+    - Frontend uses token via your proxy
+- Update your token handling to account for expiration
+- Implement token refresh logic
+- Handle 429 (rate limit) errors gracefully
 
 ## .env file data
 

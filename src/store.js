@@ -1,20 +1,16 @@
-// src/store.js
-import { createStore, applyMiddleware, combineReducers } from 'redux';
-import { thunk } from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { configureStore } from '@reduxjs/toolkit';
+import authReducer from './features/auth/authSlice';
+import postsReducer from './features/posts/postsSlice';
+import searchReducer from './features/search/searchSlice';
 
-// Import reducers
-import postsReducer from './reducers/postsReducer';
-import uiReducer from './reducers/uiReducer';
-
-const rootReducer = combineReducers({
-  posts: postsReducer,
-  ui: uiReducer,
+export const store = configureStore({
+  reducer: {
+    auth: authReducer,
+    posts: postsReducer,
+    search: searchReducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
-
-const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(thunk))
-);
-
-export default store;
