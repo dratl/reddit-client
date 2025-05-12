@@ -1,0 +1,38 @@
+.post-detail-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .post-detail-card {
+    margin-bottom: 20px;
+  }
+  
+  .post-text {
+    margin: 20px 0;
+    white-space: pre-line;
+    line-height: 1.6;
+  }
+  
+  .post-meta {
+    display: flex;
+    gap: 15px;
+    margin: 20px 0;
+    color: #666;
+  }
+  
+  .post-stat {
+    display: flex;
+    align-items: center;
+  }
+  
+  .view-on-reddit {
+    margin-top: 10px;
+  }
+  
+  .post-not-found {
+    padding: 40px;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666;
+  }
