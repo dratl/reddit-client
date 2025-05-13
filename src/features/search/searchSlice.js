@@ -6,7 +6,8 @@ const predefinedQueries = [
   'andrea chavez',
   'ernesto zedillo',
   'claudia sheinbaum',
-  'felipe calderon'
+  'felipe calderon',
+  'luis donaldo colosio',
 ];
 
 const initialState = {
