@@ -1,15 +1,47 @@
 src/
-├── actions/
-├── reducers/
+├── api/
+│   └── redditApi.js
+├── app/
+│   └── store.js
 ├── components/
+│   ├── Error/
+│   │   ├── Error.js
+│   │   └── Error.css
 │   ├── Header/
-│   ├── Sidebar/
-│   ├── PostsList/
+│   │   ├── Header.js
+│   │   └── Header.css
+│   ├── Loading/
+│   │   ├── Loading.js
+│   │   └── Loading.css
+│   ├── Navigation/
+│   │   ├── Navigation.js
+│   │   └── Navigation.css
+│   ├── PostCard/
+│   │   ├── PostCard.js
+│   │   └── PostCard.css
 │   ├── PostDetail/
-│   ├── Charts/
-│   ├── common/
-├── services/
-├── styles/
-├── store.js
+│   │   ├── PostDetail.js
+│   │   └── PostDetail.css
+│   └── SearchChart/
+│       ├── SearchChart.js
+│       └── SearchChart.css
+├── features/
+│   ├── posts/
+│   │   ├── postsSlice.js
+│   │   └── postsThunks.js
+│   └── search/
+│       ├── searchSlice.js
+│       └── searchThunks.js
+├── pages/
+│   ├── HomePage/
+│   │   ├── HomePage.js
+│   │   └── HomePage.css
+│   └── SearchPage/
+│       ├── SearchPage.js
+│       └── SearchPage.css
 ├── App.js
+├── App.css
 ├── index.js
+├── index.css
+├── reportWebVitals.js
+└── setupTests.js
