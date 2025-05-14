@@ -3,7 +3,6 @@ import { fetchQueryStats, refreshQueryStats } from './searchThunks';
 
 const predefinedQueries = [
   'fernandez noroña',
-  'andrea chavez',
   'ernesto zedillo',
   'claudia sheinbaum',
   'felipe calderon',
